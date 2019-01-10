@@ -3,6 +3,16 @@ using System.Linq;
 
 namespace Programmers
 {
+    public static class TestSkillTree
+    {
+        public static void Run()
+        {
+            SkillTree st = new SkillTree();
+            var count = st.GetSkillTreeCount("CBD", new string[] {"BACDE", "CBADF", "AECB", "BDA"});
+            Console.WriteLine(count);
+        }
+    }
+    
     //    CBD	[BACDE, CBADF, AECB, BDA]	2
     public class SkillTree
     {
