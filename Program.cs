@@ -8,8 +8,8 @@ namespace Programmers
         {
 //            TestVisitLength.Run();
 //            TestSkillTree.Run();
-//            TestRank.Run();
-            TestConvertWord.Run();
+            TestRank.Run();
+//            TestConvertWord.Run();
         }
     }
 }
