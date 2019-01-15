@@ -6,9 +6,10 @@ namespace Programmers
     {
         public static void Main(string[] args)
         {
+            TestNetwork.Run();
 //            TestVisitLength.Run();
 //            TestSkillTree.Run();
-            TestRank.Run();
+//            TestRank.Run();
 //            TestConvertWord.Run();
         }
     }
