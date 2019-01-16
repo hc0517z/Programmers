@@ -11,7 +11,7 @@ namespace Programmers
         public static void Run()
         {
             var instance = new FarthestNode();
-            var countFarthestNode = instance.solution(6, new[,] {{1, 6}, {4, 1}, {1, 2}, {3, 1}, {3, 2}, {2, 4}, {5, 2}});
+            var countFarthestNode = instance.solution(6, new[,] {{1, 6}, {4, 6}, {6, 2}, {3, 6}, {3, 2}, {2, 4}, {5, 2}});
             Console.WriteLine(countFarthestNode);
         }
     }
@@ -61,17 +61,17 @@ namespace Programmers
         {
             var traverseCount = 0;
             var visitedList = new bool[n];
-            var queue = new Queue<int>();
-            queue.Enqueue(start);
+            var stack = new Stack<int>();
+            stack.Push(start);
             visitedList[start-1] = true;
 
-            while (queue.Any())
+            while (stack.Any())
             {
-                var current = queue.Dequeue();
+                var current = stack.Pop();
                 var adjacencyList = adjacencyDictionary[current];
                 if (adjacencyList.Contains(target))
                 {
-                    queue.Enqueue(target);
+                    stack.Push(target);
                     visitedList[target - 1] = true;
                 }
                 else
@@ -80,7 +80,7 @@ namespace Programmers
                     {
                         if (!visitedList[i - 1])
                         {
-                            queue.Enqueue(i);
+                            stack.Push(i);
                             visitedList[i - 1] = true;
                         }
                     }
