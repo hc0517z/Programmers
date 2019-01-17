@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Programmers
@@ -11,33 +12,43 @@ namespace Programmers
         public static void Run()
         {
             var instance = new FarthestNode();
-            var countFarthestNode = instance.solution(6, new[,] {{1, 6}, {4, 6}, {6, 2}, {3, 6}, {3, 2}, {2, 4}, {5, 2}});
+            var countFarthestNode = instance.solution(6, new[,] {{3, 6}, {4, 3}, {3, 2}, {1, 3}, {1, 2}, {2, 4}, {5, 2}});
+            //var countFarthestNode = instance.solution(6, new[,] {{1, 6}, {4, 6}, {6, 2}, {3, 6}, {3, 2}, {2, 4}, {5, 2}});
             Console.WriteLine(countFarthestNode);
         }
     }
     
     public class FarthestNode
     {
+        private int[] dist;
+        private int[] prev;
         public int solution(int n, int[,] edge)
         {
             var vertexs = GetVertexs(n).ToArray();
             var adjacencyDictionary = GetAdjacencyDictionary(vertexs, edge);
-            var max = 0;
-            var maxCount = 0;
             var start = 1;
+
+            dist = new int[adjacencyDictionary.Count];
+            prev = new int[adjacencyDictionary.Count];
+            Dijkstra(start, adjacencyDictionary, ref dist, ref prev);
+            
+            var max = int.MinValue;
+            var maxCount = 0;
             foreach (int target in vertexs)
             {
                 if (start == target) continue;
-                
-                // target -> start : backtracking
-                var cnt = GetTraverseCount(n, target, start, adjacencyDictionary);
-                if (cnt > max)
+                var distance = GetShortestPathDistance(start, target, adjacencyDictionary);
+                if (distance > max)
                 {
-                    max = cnt;
+                    max = distance;
                     maxCount = 0;
                 }
-                if (cnt == max) maxCount++;
+                if (distance == max)
+                {
+                    maxCount++;
+                }
             }
+
             return maxCount;
         }
 
@@ -57,38 +68,49 @@ namespace Programmers
             return adjacencyList;
         }
 
-        private int GetTraverseCount(int n, int start, int target, IReadOnlyDictionary<int, List<int>> adjacencyDictionary)
+        private int GetShortestPathDistance(int start, int target, IReadOnlyDictionary<int, List<int>> adjacencyDictionary)
         {
-            var traverseCount = 0;
-            var visitedList = new bool[n];
-            var stack = new Stack<int>();
-            stack.Push(start);
-            visitedList[start-1] = true;
 
-            while (stack.Any())
+            var paths = new List<int> {target};
+            while (start != target)
             {
-                var current = stack.Pop();
-                var adjacencyList = adjacencyDictionary[current];
-                if (adjacencyList.Contains(target))
-                {
-                    stack.Push(target);
-                    visitedList[target - 1] = true;
-                }
-                else
-                {
-                    foreach (var i in adjacencyList)
-                    {
-                        if (!visitedList[i - 1])
-                        {
-                            stack.Push(i);
-                            visitedList[i - 1] = true;
-                        }
-                    }
-                }
-                traverseCount++;
+                paths.Add(prev[target-1]);
+                target = prev[target - 1];
+            }
+
+            return paths.Count;
+        }
+
+        private void Dijkstra(int start, IReadOnlyDictionary<int, List<int>> adjacencyDictionary, 
+            ref int[] dist, ref int[] prev)
+        {
+            for (int i = 0; i < adjacencyDictionary.Count; i++)
+            {
+                if (start - 1 == i) continue;
+                dist[i] = int.MaxValue;
+                prev[i] = -1;
+            }
+            var queue = new Queue<int>();
+            queue.Enqueue(start);
+            foreach (int neighbor in adjacencyDictionary[start])
+            {
+                queue.Enqueue(neighbor);
             }
             
-            return traverseCount;
+            while (queue.Any())
+            {
+                var current = queue.Dequeue();
+                foreach (int neighbor in adjacencyDictionary[current])
+                {
+                    var alt = dist[current - 1] + 1;
+                    if (alt < dist[neighbor - 1])
+                    {
+                        dist[neighbor - 1] = alt;
+                        prev[neighbor - 1] = current;
+                        queue.Enqueue(neighbor);
+                    }
+                }
+            }
         }
     }
 }
