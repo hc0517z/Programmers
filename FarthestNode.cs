@@ -70,7 +70,6 @@ namespace Programmers
 
         private int GetShortestPathDistance(int start, int target, IReadOnlyDictionary<int, List<int>> adjacencyDictionary)
         {
-
             var paths = new List<int> {target};
             while (start != target)
             {
