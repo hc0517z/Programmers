@@ -7,6 +7,7 @@ namespace Programmers
         public static void Main(string[] args)
         {
             TestCamouflage.Run();
+//            TestBinaryGap.Run();
 //            TestFarthestNode.Run();
 //            TestNetwork.Run();
 //            TestVisitLength.Run();
