@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryGap.cs" />
+    <Compile Include="Camouflage.cs" />
     <Compile Include="ConvertWord.cs" />
     <Compile Include="FarthestNode.cs" />
     <Compile Include="Network.cs" />
