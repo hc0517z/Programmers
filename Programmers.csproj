@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BestAlbum.cs" />
     <Compile Include="BinaryGap.cs" />
     <Compile Include="Camouflage.cs" />
     <Compile Include="ConvertWord.cs" />
