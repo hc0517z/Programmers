@@ -6,7 +6,8 @@ namespace Programmers
     {
         public static void Main(string[] args)
         {
-            TestBestAlbum.Run();
+            TestHIndex.Run();
+//            TestBestAlbum.Run();
 //            TestCamouflage.Run();
 //            TestBinaryGap.Run();
 //            TestFarthestNode.Run();
